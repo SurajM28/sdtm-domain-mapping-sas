@@ -1,0 +1,185 @@
+/***************************************************************************
+* SDTM MAPPING PROJECTS - CLINICAL DATA MANAGEMENT
+
+/* Create sample demographics data */
+data demographics;
+    input subject_id site_number age_years gender $ race $ ethnicity $ 
+          treatment_code $ treatment_name $ actual_treatment_code $ actual_treatment_name $
+          country_code $ informed_consent_date :date9. study_completion_date :date9.
+          first_dose_date :date9. last_dose_date :date9. demographics_date :date9.;
+    format informed_consent_date study_completion_date first_dose_date 
+           last_dose_date demographics_date date9.;
+    datalines;
+001 001 65 Male White Not_Hispanic TRT01 Treatment_A TRT01 Treatment_A USA 01JAN2024 15MAR2024 03JAN2024 10MAR2024 01JAN2024
+002 001 45 Female Black Hispanic TRT02 Treatment_B TRT02 Treatment_B USA 02JAN2024 20MAR2024 04JAN2024 15MAR2024 02JAN2024
+003 002 55 Male Asian Not_Hispanic TRT01 Treatment_A TRT01 Treatment_A CAN 03JAN2024 25MAR2024 05JAN2024 20MAR2024 03JAN2024
+004 002 42 Female White Hispanic TRT02 Treatment_B TRT02 Treatment_B USA 04JAN2024 30MAR2024 06JAN2024 25MAR2024 04JAN2024
+005 003 58 Male Black Not_Hispanic TRT01 Treatment_A TRT01 Treatment_A USA 05JAN2024 28MAR2024 07JAN2024 23MAR2024 05JAN2024
+006 003 36 Female Asian Hispanic TRT03 Treatment_C TRT03 Treatment_C CAN 06JAN2024 02APR2024 08JAN2024 28MAR2024 06JAN2024
+007 001 49 Male Other Not_Hispanic TRT03 Treatment_C TRT03 Treatment_C USA 07JAN2024 05APR2024 09JAN2024 01APR2024 07JAN2024
+008 002 33 Female White Not_Hispanic TRT01 Treatment_A TRT01 Treatment_A USA 08JAN2024 10APR2024 10JAN2024 05APR2024 08JAN2024
+009 003 61 Male Hispanic Not_Hispanic TRT02 Treatment_B TRT02 Treatment_B CAN 09JAN2024 15APR2024 11JAN2024 10APR2024 09JAN2024
+010 001 28 Female Asian Hispanic TRT03 Treatment_C TRT03 Treatment_C USA 10JAN2024 20APR2024 12JAN2024 15APR2024 10JAN2024
+;
+run;
+
+/* Create sample adverse events data */
+data adverse_events;
+    input subject_id $ site_id $ ae_sequence ae_verbatim_term $ ae_preferred_term $
+          ae_body_system $ ae_system_organ_class $ severity $ serious_flag $
+          relationship $ action_taken $ outcome $ ae_start_date :date9. 
+          ae_end_date :date9. first_dose_date :date9.;
+    format ae_start_date ae_end_date first_dose_date date9.;
+    datalines;
+001 001 1 Headache Headache Nervous_System Nervous_System_Disorders Mild No Possible None Recovered 05JAN2024 07JAN2024 03JAN2024
+002 001 1 Nausea Nausea Gastrointestinal Gastrointestinal_Disorders Moderate No Probable Reduced Recovered 06JAN2024 08JAN2024 04JAN2024
+003 002 1 Dizziness Dizziness Nervous_System Nervous_System_Disorders Severe Yes Definite Withdrawn Not_Recovered 07JAN2024 . 05JAN2024
+004 002 1 Fatigue Fatigue General General_Disorders Mild No Unlikely None Recovered 10JAN2024 12JAN2024 06JAN2024
+005 003 1 Rash Rash Skin Skin_Disorders Moderate No Possible None Recovered 15JAN2024 20JAN2024 07JAN2024
+006 003 1 Insomnia Insomnia Psychiatric Psychiatric_Disorders Mild No Probable Reduced Recovering 18JAN2024 . 08JAN2024
+007 001 1 Cough Cough Respiratory Respiratory_Disorders Mild No Not_Related None Recovered 12JAN2024 15JAN2024 09JAN2024
+008 002 1 Fever Fever General General_Disorders Moderate Yes Possible Interrupted Recovered 20JAN2024 22JAN2024 10JAN2024
+009 003 1 Chest_Pain Chest_Pain Cardiac Cardiac_Disorders Severe Yes Definite Withdrawn Fatal 25JAN2024 26JAN2024 11JAN2024
+010 001 1 Dyspepsia Dyspepsia Gastrointestinal Gastrointestinal_Disorders Mild No Unlikely None Recovered 14JAN2024 16JAN2024 12JAN2024
+;
+run;
+
+/* Create sample vital signs data */
+data vital_signs;
+    input subject_id $ site_id $ vs_sequence visit_number visit_name $
+          vs_test $ vs_result position $ vs_date :date9. first_dose_date :date9.;
+    format vs_date first_dose_date date9.;
+    datalines;
+001 001 1 1 Baseline Systolic_BP 120 Sitting 01JAN2024 03JAN2024
+001 001 2 1 Baseline Diastolic_BP 80 Sitting 01JAN2024 03JAN2024
+001 001 3 1 Baseline Heart_Rate 72 Sitting 01JAN2024 03JAN2024
+001 001 4 2 Week_2 Systolic_BP 115 Sitting 17JAN2024 03JAN2024
+002 001 1 1 Baseline Weight 70.5 Standing 02JAN2024 04JAN2024
+002 001 2 1 Baseline Height 165 Standing 02JAN2024 04JAN2024
+002 001 3 2 Week_2 Systolic_BP 118 Sitting 18JAN2024 04JAN2024
+003 002 1 1 Baseline Temperature 36.8 Sitting 03JAN2024 05JAN2024
+003 002 2 1 Baseline Respiratory_Rate 18 Sitting 03JAN2024 05JAN2024
+004 002 1 1 Baseline Systolic_BP 125 Sitting 04JAN2024 06JAN2024
+004 002 2 1 Baseline Diastolic_BP 85 Sitting 04JAN2024 06JAN2024
+005 003 1 1 Baseline Heart_Rate 68 Supine 05JAN2024 07JAN2024
+005 003 2 2 Week_2 Heart_Rate 75 Supine 19JAN2024 07JAN2024
+006 003 1 1 Baseline Weight 58.2 Standing 06JAN2024 08JAN2024
+007 001 1 1 Baseline Height 178 Standing 07JAN2024 09JAN2024
+008 002 1 1 Baseline Temperature 37.1 Sitting 08JAN2024 10JAN2024
+;
+run;
+
+/* Create sample laboratory data */
+data laboratory;
+    input subject_id $ site_id $ lab_sequence visit_number visit_name $
+          lab_category $ lab_test $ lab_result lab_unit $ normal_range_low
+          normal_range_high lab_date :date9. lab_time :time8. first_dose_date :date9.;
+    format lab_date first_dose_date date9. lab_time time8.;
+    datalines;
+001 001 1 1 Baseline Chemistry Glucose 95 mg/dL 70 100 01JAN2024 08:30 03JAN2024
+001 001 2 1 Baseline Hematology Hemoglobin 14.2 g/dL 12 16 01JAN2024 08:30 03JAN2024
+002 001 1 1 Baseline Chemistry Creatinine 1.1 mg/dL 0.6 1.2 02JAN2024 09:15 04JAN2024
+002 001 2 1 Baseline Hematology WBC 6.8 10^3/uL 4.0 10.0 02JAN2024 09:15 04JAN2024
+003 002 1 1 Baseline Chemistry ALT 32 U/L 10 40 03JAN2024 08:45 05JAN2024
+003 002 2 1 Baseline Chemistry AST 28 U/L 10 35 03JAN2024 08:45 05JAN2024
+004 002 1 1 Baseline Hematology Platelets 250 10^3/uL 150 400 04JAN2024 09:00 06JAN2024
+004 002 2 1 Baseline Chemistry Glucose 88 mg/dL 70 100 04JAN2024 09:00 06JAN2024
+005 003 1 1 Baseline Hematology HCT 42 % 36 46 05JAN2024 08:15 07JAN2024
+005 003 2 2 Week_2 Chemistry Creatinine 0.9 mg/dL 0.6 1.2 19JAN2024 08:30 07JAN2024
+006 003 1 1 Baseline Urinalysis Protein 0 mg/dL 0 10 06JAN2024 10:00 08JAN2024
+007 001 1 1 Baseline Chemistry Glucose 102 mg/dL 70 100 07JAN2024 08:00 09JAN2024
+008 002 1 1 Baseline Hematology Hemoglobin 13.8 g/dL 12 16 08JAN2024 09:30 10JAN2024
+009 003 1 1 Baseline Chemistry ALT 45 U/L 10 40 09JAN2024 08:45 11JAN2024
+010 001 1 1 Baseline Hematology WBC 7.2 10^3/uL 4.0 10.0 10JAN2024 09:00 12JAN2024
+;
+run;
+
+/* Create sample concomitant medications data */
+data conmed;
+    input subject_id $ site_id $ cm_sequence medication_name $ generic_name $
+          indication $ dose_amount dose_unit $ dose_form $ frequency $
+          route $ start_date :date9. end_date :date9. first_dose_date :date9.;
+    format start_date end_date first_dose_date date9.;
+    datalines;
+001 001 1 Tylenol Acetaminophen Headache 500 mg Tablet BID PO 15DEC2023 . 03JAN2024
+002 001 1 Lipitor Atorvastatin Hyperlipidemia 20 mg Tablet QD PO 01NOV2023 . 04JAN2024
+003 002 1 Aspirin Aspirin Cardioprotection 81 mg Tablet QD PO 01JAN2023 . 05JAN2024
+004 002 1 Metformin Metformin Diabetes 500 mg Tablet BID PO 15JUN2023 . 06JAN2024
+005 003 1 Lisinopril Lisinopril Hypertension 10 mg Tablet QD PO 20AUG2023 . 07JAN2024
+006 003 1 Omeprazole Omeprazole GERD 20 mg Capsule QD PO 10SEP2023 . 08JAN2024
+007 001 1 Simvastatin Simvastatin Hyperlipidemia 40 mg Tablet QD PO 05FEB2023 . 09JAN2024
+008 002 1 Multivitamin Multivitamin Supplement 1 tablet Tablet QD PO 01JAN2024 . 10JAN2024
+009 003 1 Calcium Calcium Supplement 600 mg Tablet BID PO 15NOV2023 . 11JAN2024
+010 001 1 Ibuprofen Ibuprofen Pain 200 mg Tablet PRN PO 20DEC2023 05FEB2024 12JAN2024
+;
+run;
+data dm;
+    /* Required variables for DM domain */
+    length STUDYID $20 DOMAIN $2 USUBJID $40 SUBJID $20;
+    length RFSTDTC $19 RFENDTC $19 RFXSTDTC $19 RFXENDTC $19;
+    length SITEID $10 AGE 8 AGEU $10 SEX $1 RACE $50 ETHNIC $50;
+    length ARMCD $20 ARM $200 ACTARMCD $20 ACTARM $200;
+    length COUNTRY $3 DMDTC $19 DMDY 8;
+    
+    set demographics;
+    
+    /* Standard SDTM variables */
+    STUDYID = "STUDY001";
+    DOMAIN = "DM";
+    USUBJID = catx("-", STUDYID, SITEID, SUBJID);
+    SUBJID = strip(put(subject_id, best.));
+    
+    /* Site information */
+    SITEID = strip(put(site_number, z3.));
+    
+    /* Demographics */
+    AGE = input(age_years, best.);
+    AGEU = "YEARS";
+    SEX = upcase(substr(gender, 1, 1));
+    
+    /* Race mapping */
+    select (upcase(race));
+        when ("WHITE", "CAUCASIAN") RACE = "WHITE";
+        when ("BLACK", "AFRICAN AMERICAN") RACE = "BLACK OR AFRICAN AMERICAN";
+        when ("ASIAN") RACE = "ASIAN";
+        when ("HISPANIC") RACE = "HISPANIC";
+        when ("OTHER") RACE = "OTHER";
+        otherwise RACE = "NOT REPORTED";
+    end;
+    
+    /* Ethnicity mapping */
+    select (upcase(ethnicity));
+        when ("HISPANIC", "LATINO") ETHNIC = "HISPANIC OR LATINO";
+        when ("NOT_HISPANIC", "NON-HISPANIC", "NOT HISPANIC") ETHNIC = "NOT HISPANIC OR LATINO";
+        otherwise ETHNIC = "NOT REPORTED";
+    end;
+    
+    /* Treatment assignment */
+    ARMCD = treatment_code;
+    ARM = treatment_name;
+    ACTARMCD = actual_treatment_code;
+    ACTARM = actual_treatment_name;
+    
+    /* Reference dates - Using ISO 8601 format (YYYY-MM-DD) */
+    if not missing(informed_consent_date) then 
+        RFSTDTC = put(informed_consent_date, yymmdd10.);
+    if not missing(study_completion_date) then 
+        RFENDTC = put(study_completion_date, yymmdd10.);
+    if not missing(first_dose_date) then 
+        RFXSTDTC = put(first_dose_date, yymmdd10.);
+    if not missing(last_dose_date) then 
+        RFXENDTC = put(last_dose_date, yymmdd10.);
+    
+    /* Country */
+    COUNTRY = country_code;
+    
+    /* DM date and day - ISO format */
+    DMDTC = put(demographics_date, yymmdd10.);
+    if not missing(demographics_date) and not missing(informed_consent_date) then
+        DMDY = demographics_date - informed_consent_date + 1;
+    
+    /* Keep only required variables */
+    keep STUDYID DOMAIN USUBJID SUBJID RFSTDTC RFENDTC RFXSTDTC RFXENDTC
+         SITEID AGE AGEU SEX RACE ETHNIC ARMCD ARM ACTARMCD ACTARM
+         COUNTRY DMDTC DMDY;
+run;
